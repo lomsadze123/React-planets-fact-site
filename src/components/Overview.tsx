@@ -17,12 +17,13 @@ const Div = styled.div`
   justify-content: space-between;
   border-top: 0.1rem solid rgba(255, 255, 255, 0.2);
   border-bottom: 0.1rem solid rgba(255, 255, 255, 0.2);
-  padding: 2rem 2.4rem;
+  padding: 0 2.4rem;
   p {
     color: #fff;
     font-size: 0.9rem;
     letter-spacing: 0.1929rem;
     text-transform: uppercase;
     opacity: 0.5;
+    padding: 2rem 0;
   }
 `;

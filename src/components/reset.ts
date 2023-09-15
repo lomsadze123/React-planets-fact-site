@@ -26,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background: #070724 url(${background});
+    position: relative;
   }
 
 `;
