@@ -25,5 +25,6 @@ const Div = styled.div`
     text-transform: uppercase;
     opacity: 0.5;
     padding: 2rem 0;
+    font-weight: 700;
   }
 `;

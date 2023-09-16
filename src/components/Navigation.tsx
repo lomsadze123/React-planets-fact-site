@@ -3,7 +3,7 @@ import menu from "../assets/menu.svg";
 import Overview from "./Overview";
 import MainInfos from "./MainInfos";
 import arrow from "../assets/arrow.svg";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Navigation = () => {
   const planetsList = [
@@ -65,7 +65,7 @@ const Navigation = () => {
         )}
       </header>
       {windowWidth < 768 && <Overview />}
-      <MainInfos />
+      <MainInfos windowWidth={windowWidth} />
     </Div>
   );
 };
@@ -109,7 +109,7 @@ const Div = styled.div`
     padding: 3rem 3.2rem 0 2.4rem;
     z-index: 1;
   }
-  aside {
+  nav aside {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -136,14 +136,14 @@ const Div = styled.div`
   @media (min-width: 768px) {
     header div {
       justify-content: center;
-      padding: 3.2rem 0 2.5rem 0;
+      padding: 3.2rem 0 1.5rem 0;
     }
     ul {
       display: flex;
       justify-content: space-between;
       padding: 0 5.1rem;
       position: static;
-      border-bottom: 0.2rem solid rgba(255, 255, 255, 0.1);
+      border-bottom: 0.1rem solid rgba(255, 255, 255, 0.2);
     }
     nav li {
       font-size: 1.1rem;
@@ -154,8 +154,39 @@ const Div = styled.div`
     nav aside::after {
       content: none;
     }
-    aside {
+    nav aside {
       border: 0;
+      display: block;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+      max-width: 146.8rem;
+      margin: 0 auto;
+    }
+    header div {
+      display: block;
+      padding: 0;
+    }
+    ul {
+      border: 0;
+      padding: 0;
+      gap: 3.3rem;
+    }
+    nav li {
+      padding: 3.3rem 0 2.7rem 0;
+      opacity: 0.75;
+      cursor: pointer;
+      transition: box-shadow 350ms ease;
+    }
+    nav li:hover {
+      opacity: 1;
+      box-shadow: 0 0.4rem 0 #6d2ed5 inset;
     }
   }
 `;
