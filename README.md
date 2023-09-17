@@ -1,1 +1,1 @@
-# React + TypeScript + Vite
+<h1 color="red">React + TypeScript + Vite</h1>
