@@ -1,12 +1,19 @@
 import styled from "styled-components";
 
-const NumberInfo = () => {
+export interface Types {
+  rotation: string;
+  revolution: string;
+  radius: string;
+  temperature: string;
+}
+
+const NumberInfo = ({ rotation, revolution, radius, temperature }: Types) => {
   return (
     <Article>
-      <NumberInfoComponent text="ROTATION TIME" number="0.99 days" />
-      <NumberInfoComponent text="REVOLUTION TIME" number="365.26 days" />
-      <NumberInfoComponent text="RADIUS" number="6,371 km" />
-      <NumberInfoComponent text="AVERAGE TEMP." number="16°c" />
+      <NumberInfoComponent text="ROTATION TIME" number={rotation} />
+      <NumberInfoComponent text="REVOLUTION TIME" number={revolution} />
+      <NumberInfoComponent text="RADIUS" number={radius} />
+      <NumberInfoComponent text="AVERAGE TEMP." number={temperature} />
     </Article>
   );
 };

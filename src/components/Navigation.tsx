@@ -3,22 +3,37 @@ import menu from "../assets/menu.svg";
 import Overview from "./Overview";
 import MainInfos from "./MainInfos";
 import arrow from "../assets/arrow.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { PlanetType, planetsList } from "./PlanetData";
+import planetImages from "./PlanetImages";
 
 const Navigation = () => {
-  const planetsList = [
-    "mercury",
-    "venus",
-    "earth",
-    "mars",
-    "jupiter",
-    "saturn",
-    "uranus",
-    "neptune",
-  ];
-
   const [hide, setHide] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [planet, setPlanet] = useState("earth");
+  const [planetData, setPlanetData] = useState<PlanetType | null>(null);
+  const ref = useRef(true);
+
+  useEffect(() => {
+    const fetchPlanets = async () => {
+      try {
+        const response = await axios.get(
+          "https://planets-api.vercel.app/api/v1/planets/" + planet
+        );
+        const data = response.data;
+        if (ref.current) {
+          ref.current = false;
+        } else {
+          setPlanetData(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchPlanets();
+  }, [planet]);
 
   useEffect(() => {
     const handleWindowWidth = () => {
@@ -39,6 +54,11 @@ const Navigation = () => {
     };
   }, []);
 
+  const handlePlanets = (planet: string) => {
+    setPlanet(planet);
+    setHide(false);
+  };
+
   return (
     <Div>
       <header>
@@ -57,7 +77,7 @@ const Navigation = () => {
             <ul>
               {planetsList.map((planet) => (
                 <aside key={planet}>
-                  <li>{planet}</li>
+                  <li onClick={() => handlePlanets(planet)}>{planet}</li>
                 </aside>
               ))}
             </ul>
@@ -65,7 +85,18 @@ const Navigation = () => {
         )}
       </header>
       {windowWidth < 768 && <Overview />}
-      <MainInfos windowWidth={windowWidth} />
+      <MainInfos
+        windowWidth={windowWidth}
+        image={
+          planetData?.name.toLocaleLowerCase() as keyof typeof planetImages
+        }
+        title={planetData?.name ?? ""}
+        review={planetData?.overview.content ?? ""}
+        rotation={planetData?.rotation ?? ""}
+        revolution={planetData?.revolution ?? ""}
+        radius={planetData?.radius ?? ""}
+        temperature={planetData?.temperature ?? ""}
+      />
     </Div>
   );
 };

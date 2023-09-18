@@ -1,29 +1,47 @@
 import styled from "styled-components";
-import earth from "../assets/planet-earth.svg";
 import NumberInfo from "./NumberInfo";
 import Overview from "./Overview";
+import { Types } from "./NumberInfo";
+import planetImages from "./PlanetImages";
 
-const MainInfos = ({ windowWidth }: { windowWidth: number }) => {
+interface AddTypes extends Types {
+  windowWidth: number;
+  image: keyof typeof planetImages;
+  title: string;
+  review: string;
+}
+
+const MainInfos = ({
+  windowWidth,
+  image = "earth",
+  title,
+  review,
+  rotation,
+  revolution,
+  radius,
+  temperature,
+}: AddTypes) => {
+  const PlanetImage = planetImages[image];
+
   return (
     <Main>
       <aside>
-        <img src={earth} alt="" />
+        <img src={PlanetImage.planet} alt="" />
         <Div>
           <section>
-            <h2>Earth</h2>
-            <p>
-              Third planet from the Sun and the only known planet to harbor
-              life. About 29.2% of Earth's surface is land with remaining 70.8%
-              is covered with water. Earth's distance from the Sun, physical
-              properties and geological history have allowed life to evolve and
-              thrive.
-            </p>
+            <h2>{title}</h2>
+            <p>{review}</p>
             <a href="#">Wikipedia</a>
           </section>
           {windowWidth >= 768 && <Overview />}
         </Div>
       </aside>
-      <NumberInfo />
+      <NumberInfo
+        rotation={rotation}
+        revolution={revolution}
+        radius={radius}
+        temperature={temperature}
+      />
     </Main>
   );
 };
