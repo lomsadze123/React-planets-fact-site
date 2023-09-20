@@ -5,14 +5,14 @@ import MainInfos from "./MainInfos";
 import arrow from "../assets/arrow.svg";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { PlanetType, planetsList } from "./PlanetData";
+import { PlanetType, planetsList, PlanetData } from "./PlanetData";
 import planetImages from "./PlanetImages";
 
 const Navigation = () => {
   const [hide, setHide] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [planet, setPlanet] = useState("earth");
-  const [planetData, setPlanetData] = useState<PlanetType | null>(null);
+  const [planetData, setPlanetData] = useState<PlanetType>(PlanetData);
   const ref = useRef(true);
   const [paragraph, setParagraph] = useState("overview");
 

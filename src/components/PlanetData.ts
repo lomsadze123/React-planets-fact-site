@@ -1,4 +1,4 @@
-const PlanetData = {
+export const PlanetData = {
   name: "Earth",
   overview: {
     content:
