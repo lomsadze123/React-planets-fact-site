@@ -1,4 +1,3 @@
-# React + TypeScript + Vite
 
 # React Planets Fact Site 
 Welcome to the Planets Fact Website! This website provides information about various planets in our solar system, including their characteristics, images, and interesting facts. It's a great resource for anyone interested in astronomy and planetary science.
