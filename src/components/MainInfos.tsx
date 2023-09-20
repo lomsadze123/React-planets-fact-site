@@ -3,12 +3,14 @@ import NumberInfo from "./NumberInfo";
 import Overview from "./Overview";
 import { Types } from "./NumberInfo";
 import planetImages from "./PlanetImages";
+import { OverviewTypes } from "./Overview";
 
-interface AddTypes extends Types {
+interface AddTypes extends Types, OverviewTypes {
   windowWidth: number;
   image: keyof typeof planetImages;
   title: string;
   review: string;
+  paragraph: string;
 }
 
 const MainInfos = ({
@@ -20,8 +22,21 @@ const MainInfos = ({
   revolution,
   radius,
   temperature,
+  overviewContext,
+  structureContext,
+  geologyContext,
+  setParagraph,
+  paragraph,
 }: AddTypes) => {
   const PlanetImage = planetImages[image];
+
+  if (paragraph === "overview") {
+    review = overviewContext;
+  } else if (paragraph === "structure") {
+    review = structureContext;
+  } else if (paragraph === "surface") {
+    review = geologyContext;
+  }
 
   return (
     <Main>
@@ -33,7 +48,14 @@ const MainInfos = ({
             <p>{review}</p>
             <a href="#">Wikipedia</a>
           </section>
-          {windowWidth >= 768 && <Overview />}
+          {windowWidth >= 768 && (
+            <Overview
+              overviewContext={overviewContext}
+              structureContext={structureContext}
+              geologyContext={geologyContext}
+              setParagraph={setParagraph}
+            />
+          )}
         </Div>
       </aside>
       <NumberInfo

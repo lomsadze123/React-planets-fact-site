@@ -1,14 +1,29 @@
 import styled from "styled-components";
 
-const Overview = () => {
+export interface OverviewTypes {
+  overviewContext: string;
+  structureContext: string;
+  geologyContext: string;
+  setParagraph: (text: string) => void;
+}
+
+const Overview = ({ setParagraph }: OverviewTypes) => {
   return (
     <Div>
-      <p>Overview</p>
-      <p>Structure</p>
-      <p>Surface</p>
+      <p
+        onClick={() => {
+          setParagraph("overview");
+        }}
+      >
+        Overview
+      </p>
+      <p onClick={() => setParagraph("structure")}>Structure</p>
+      <p onClick={() => setParagraph("surface")}>Surface</p>
     </Div>
   );
 };
+
+console.log();
 
 export default Overview;
 

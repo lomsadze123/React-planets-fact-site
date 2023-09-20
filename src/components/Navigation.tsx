@@ -14,6 +14,7 @@ const Navigation = () => {
   const [planet, setPlanet] = useState("earth");
   const [planetData, setPlanetData] = useState<PlanetType | null>(null);
   const ref = useRef(true);
+  const [paragraph, setParagraph] = useState("");
 
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -84,7 +85,14 @@ const Navigation = () => {
           </nav>
         )}
       </header>
-      {windowWidth < 768 && <Overview />}
+      {windowWidth < 768 && (
+        <Overview
+          overviewContext={planetData?.overview.content ?? ""}
+          structureContext={planetData?.structure.content ?? ""}
+          geologyContext={planetData?.geology.content ?? ""}
+          setParagraph={setParagraph}
+        />
+      )}
       <MainInfos
         windowWidth={windowWidth}
         image={
@@ -96,6 +104,11 @@ const Navigation = () => {
         revolution={planetData?.revolution ?? ""}
         radius={planetData?.radius ?? ""}
         temperature={planetData?.temperature ?? ""}
+        overviewContext={planetData?.overview.content ?? ""}
+        structureContext={planetData?.structure.content ?? ""}
+        geologyContext={planetData?.geology.content ?? ""}
+        setParagraph={setParagraph}
+        paragraph={paragraph}
       />
     </Div>
   );
