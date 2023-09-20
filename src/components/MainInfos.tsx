@@ -1,9 +1,10 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import NumberInfo from "./NumberInfo";
 import Overview from "./Overview";
 import { Types } from "./NumberInfo";
 import planetImages from "./PlanetImages";
 import { OverviewTypes } from "./Overview";
+import { useEffect, useState } from "react";
 
 interface AddTypes extends Types, OverviewTypes {
   windowWidth: number;
@@ -27,8 +28,19 @@ const MainInfos = ({
   geologyContext,
   setParagraph,
   paragraph,
+  color,
 }: AddTypes) => {
   const PlanetImage = planetImages[image];
+
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    setAnimate(true);
+    const timeout = setTimeout(() => setAnimate(false), 800);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [image]);
 
   if (paragraph === "overview") {
     review = overviewContext;
@@ -41,7 +53,33 @@ const MainInfos = ({
   return (
     <Main>
       <aside>
-        <img src={PlanetImage.planet} alt="" />
+        {paragraph === "overview" && (
+          <Img
+            animate={animate}
+            image={image}
+            src={PlanetImage.planet}
+            alt={image}
+          />
+        )}
+        {paragraph === "structure" && (
+          <Img
+            animate={animate}
+            image={image}
+            src={PlanetImage.internal}
+            alt={image}
+          />
+        )}
+        {paragraph === "surface" && (
+          <span>
+            <Img
+              animate={animate}
+              image={image}
+              src={PlanetImage.planet}
+              alt={image}
+            />
+            <img className="geology" src={PlanetImage.geology} alt={image} />
+          </span>
+        )}
         <Div>
           <section>
             <h2>{title}</h2>
@@ -53,7 +91,9 @@ const MainInfos = ({
               overviewContext={overviewContext}
               structureContext={structureContext}
               geologyContext={geologyContext}
+              paragraph={paragraph}
               setParagraph={setParagraph}
+              color={color}
             />
           )}
         </Div>
@@ -72,7 +112,6 @@ export default MainInfos;
 
 const Main = styled.main`
   text-align: center;
-
   padding: 6.4rem 2.4rem 4.7rem 2.4rem;
   div h2 {
     font-size: 4rem;
@@ -99,19 +138,33 @@ const Main = styled.main`
     cursor: text;
   }
   img {
-    max-width: 17.3rem;
+    width: 50%;
+    height: auto;
+  }
+
+  span {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .geology {
+    position: absolute;
+    max-width: 11rem;
     width: 100%;
     height: auto;
+    top: 60%;
+  }
+
+  span img {
+    width: 100%;
   }
 
   @media (min-width: 768px) {
     padding: 9.6rem 3.9rem 3.6rem 4rem;
     div {
       text-align: left;
-    }
-    img {
-      max-width: 28.5rem;
-      width: 100%;
     }
     div h2 {
       font-size: 4.8rem;
@@ -124,6 +177,9 @@ const Main = styled.main`
       max-width: 33.9rem;
       margin: 2.4rem 0 3.2rem 0;
     }
+    .geology {
+      max-width: 16.3rem;
+    }
   }
 
   @media (min-width: 1025px) {
@@ -133,9 +189,6 @@ const Main = styled.main`
       align-items: center;
       justify-content: center;
       gap: 18rem;
-    }
-    img {
-      max-width: 45rem;
     }
     h2 + p,
     a {
@@ -186,14 +239,39 @@ const Div = styled.div`
     a {
       margin-bottom: 3.9rem;
     }
-  }
-
-  @media (min-width: 1025px) {
     div p {
       cursor: pointer;
     }
     div p:hover {
       background-color: rgba(216, 216, 216, 0.2);
     }
+  }
+`;
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: .75;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const Img = styled.img<{ image: string; animate: boolean }>`
+  animation: ${(props) => (props.animate ? fadeIn : "none")} 1s ease-in-out;
+  max-width: var(${(props) => `--${props.image}-small`});
+
+  @media (min-width: 768px) {
+    max-width: var(${(props) => `--${props.image}-medium`});
+  }
+
+  @media (min-width: 1025px) {
+    max-width: var(${(props) => `--${props.image}-big`});
   }
 `;

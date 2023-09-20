@@ -14,7 +14,7 @@ const Navigation = () => {
   const [planet, setPlanet] = useState("earth");
   const [planetData, setPlanetData] = useState<PlanetType | null>(null);
   const ref = useRef(true);
-  const [paragraph, setParagraph] = useState("");
+  const [paragraph, setParagraph] = useState("overview");
 
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -76,9 +76,17 @@ const Navigation = () => {
         {(windowWidth >= 768 || hide) && (
           <nav>
             <ul>
-              {planetsList.map((planet) => (
-                <aside key={planet}>
-                  <li onClick={() => handlePlanets(planet)}>{planet}</li>
+              {planetsList.map((planet1, index) => (
+                <aside key={planet1}>
+                  <Li
+                    index={index + 1}
+                    color={
+                      planet1 === planet ? planetData?.color ?? "" : "none"
+                    }
+                    onClick={() => handlePlanets(planet1)}
+                  >
+                    {planet1}
+                  </Li>
                 </aside>
               ))}
             </ul>
@@ -90,7 +98,9 @@ const Navigation = () => {
           overviewContext={planetData?.overview.content ?? ""}
           structureContext={planetData?.structure.content ?? ""}
           geologyContext={planetData?.geology.content ?? ""}
+          paragraph={paragraph}
           setParagraph={setParagraph}
+          color={planetData?.color ?? ""}
         />
       )}
       <MainInfos
@@ -109,6 +119,7 @@ const Navigation = () => {
         geologyContext={planetData?.geology.content ?? ""}
         setParagraph={setParagraph}
         paragraph={paragraph}
+        color={planetData?.color ?? ""}
       />
     </Div>
   );
@@ -158,16 +169,6 @@ const Div = styled.div`
     justify-content: space-between;
     align-items: center;
     border-bottom: 0.1rem solid rgba(255, 255, 255, 0.1);
-  }
-  nav li::before {
-    margin-right: 2.5rem;
-    content: "";
-    background-color: #def4fc;
-    border-radius: 50%;
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    vertical-align: middle;
   }
   nav aside::after {
     content: "";
@@ -228,9 +229,28 @@ const Div = styled.div`
       cursor: pointer;
       transition: box-shadow 350ms ease;
     }
-    nav li:hover {
+  }
+`;
+
+const Li = styled.li<{ color: string; index: number }>`
+  &::before {
+    margin-right: 2.5rem;
+    content: "";
+    background-color: var(${(props) => `--${props.index}-color`});
+    border-radius: 50%;
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    vertical-align: middle;
+  }
+
+  @media (min-width: 768px) {
+    box-shadow: 0 0.4rem 0 ${(props) => props.color} inset;
+    transition: box-shadow 350ms ease;
+
+    &:hover {
       opacity: 1;
-      box-shadow: 0 0.4rem 0 #6d2ed5 inset;
+      box-shadow: 0 0.4rem 0 ${(props) => props.color} inset !important;
     }
   }
 `;
