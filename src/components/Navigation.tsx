@@ -95,9 +95,9 @@ const Navigation = () => {
       </header>
       {windowWidth < 768 && (
         <Overview
-          overviewContext={planetData?.overview.content ?? ""}
-          structureContext={planetData?.structure.content ?? ""}
-          geologyContext={planetData?.geology.content ?? ""}
+          overviewContext={planetData.overview.content}
+          structureContext={planetData.structure.content}
+          geologyContext={planetData.geology.content}
           paragraph={paragraph}
           setParagraph={setParagraph}
           color={planetData?.color ?? ""}
@@ -108,18 +108,18 @@ const Navigation = () => {
         image={
           planetData?.name.toLocaleLowerCase() as keyof typeof planetImages
         }
-        title={planetData?.name ?? ""}
-        review={planetData?.overview.content ?? ""}
-        rotation={planetData?.rotation ?? ""}
-        revolution={planetData?.revolution ?? ""}
-        radius={planetData?.radius ?? ""}
-        temperature={planetData?.temperature ?? ""}
-        overviewContext={planetData?.overview.content ?? ""}
-        structureContext={planetData?.structure.content ?? ""}
-        geologyContext={planetData?.geology.content ?? ""}
+        title={planetData.name}
+        review={planetData.overview.content}
+        rotation={planetData.rotation}
+        revolution={planetData.revolution}
+        radius={planetData.radius}
+        temperature={planetData.temperature}
+        overviewContext={planetData.overview.content}
+        structureContext={planetData.structure.content}
+        geologyContext={planetData.geology.content}
         setParagraph={setParagraph}
         paragraph={paragraph}
-        color={planetData?.color ?? ""}
+        color={planetData.color}
       />
     </Div>
   );

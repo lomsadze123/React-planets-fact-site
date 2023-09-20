@@ -252,11 +252,14 @@ const fadeIn = keyframes`
   0% {
     opacity: 0;
   }
+  25% {
+    opacity: 0;
+  }
   50% {
-    opacity: 0.5;
+    opacity: 0.25;
   }
   75% {
-    opacity: .75;
+    opacity: 0.5;
   }
   100% {
     opacity: 1;
@@ -264,7 +267,7 @@ const fadeIn = keyframes`
 `;
 
 const Img = styled.img<{ image: string; animate: boolean }>`
-  animation: ${(props) => (props.animate ? fadeIn : "none")} 1s ease-in-out;
+  animation: ${(props) => (props.animate ? fadeIn : "none")} 0.8s ease-in-out;
   max-width: var(${(props) => `--${props.image}-small`});
 
   @media (min-width: 768px) {
